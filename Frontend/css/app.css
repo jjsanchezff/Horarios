@@ -1,3 +1,8 @@
+:root {
+    --morado : #4F378A;
+    --blanco : #E6E1E2;
+}
+
 .titulo{
     text-shadow:2px 2px 4px rgba(0, 0, 0, 0.5);  
     text-transform: uppercase;
@@ -10,4 +15,41 @@
 .unt{
     width: 15rem;
     margin-right:15rem;
+}
+.usuario{
+    background-image: url(../img/Usuario.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width: 200px; /* O el tamaño que necesites */
+    height: 200px;
+    margin: auto;
+    margin-top: -10rem;
+}
+.login{
+    padding: 10rem;
+    margin-bottom: 0;
+    
+}
+.login-container{
+    border-radius: 4rem;
+    width: 50%;
+}
+
+.bg-primary{
+    background-color: var(--blanco)!important;
+}
+.bg-secondary,
+.btn-primary{
+    background-color: var(--morado)!important;
+}
+.btn-primary{
+    border: none;
+
+}
+.boton-login{
+    transition: transform 0.2s ease;
+}
+.boton-login:hover{
+    transform: scale(1.2);
 }

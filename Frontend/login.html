@@ -19,18 +19,22 @@
         </div>
     </header>
 
-    <section class="bg-secondary p-5">
-        <div class="login container-xl">
+    <section class="bg-secondary login">
+        <div class=" container-xl bg-primary p-5 login-container">
             <div class="row d-flex justify-content-center">
-                <div class="col-md-6">
-                    <legend>Usuario</legend>
-                    <div>
-                        <label class="form-label titulo-label">Usuario:</label>
-                        <input class="form-control titulo-label" type="text">
+                <div class="col-md-8">
+                    <div class="usuario"></div>
+                    <div class="mt-5 p-3">
+                        <label class="form-label titulo-label" for="usuario">Usuario:</label>
+                        <input class="form-control titulo-label" type="text" id="usuario">
                     </div>
-                    <div>
-                        <label class="form-label">Contraseña:</label>
-                        <input class="form-control" type="password">
+                    <div class=" p-3">
+                        <label class="form-label" for="Contraseña">Contraseña:</label>
+                        <input class="form-control" type="password" id="Contraseña">
+                    </div>
+                    <div class="mt-5 d-flex container-xl justify-content-evenly p-5 gap-5">
+                        <a class="btn btn-primary fw-bold py-2 px-5 boton-login">Ingresar</a>
+                        <a class="btn btn-primary fw-bold py-2 px-5 boton-login">Registrar</a>
                     </div>
                 </div>
             </div>
