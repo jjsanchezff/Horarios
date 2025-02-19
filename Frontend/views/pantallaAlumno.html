@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignación de Horario</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/app.css" rel="stylesheet">
+</head>
+<body class="bg-primary">
+    <header class="bg-secondary p-3">
+        <div class="d-flex align-items-center">
+            <div class="unt">
+                <img class="img-fluid" src="../img/insigniaUnt.png" alt="insigniaUnt">
+            </div>
+            <div class="container-xl">
+                <h1 class="fw-bold text-white titulo fs-1">Universidad Nacional de Trujillo</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-5">
+        <div class="card mb-4 border-light">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="https://placehold.co/400x400" alt="User Placeholder" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="col-md-9 text-secondary fw-bold">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="nombres" class="form-label">Nombres:</label>
+                                    <input type="text" class="form-control" id="nombres" placeholder="Value">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="apellidos" class="form-label">Apellidos:</label>
+                                    <input type="text" class="form-control" id="apellidos" placeholder="Value">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label for="edad" class="form-label">Edad:</label>
+                                    <input type="number" class="form-control" id="edad" placeholder="Value">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="codigo" class="form-label">Codigo:</label>
+                                    <input type="text" class="form-control" id="codigo" placeholder="Value">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-light">
+            <div class="card-header text-center border-light bg-transparent">
+                <h4 class="fw-bold">Asignación de Horario</h4>
+            </div>
+
+            <div class="card-body border-light bg-transparent">
+                <div class="text-secondary fw-bold mb-5">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="periodo" class="form-label">Periodo:</label>
+                                <input type="text" class="form-control" id="periodo" placeholder="Value">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ciclo" class="form-label">Ciclo:</label>
+                                <input type="text" class="form-control" id="ciclo" placeholder="Value">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <table class="table table-bordered border-secondary">
+                    <thead>
+                        <tr class="text-center">
+                            <th>HORARIO</th>
+                            <th>LUNES</th>
+                            <th>MARTES</th>
+                            <th>MIERCOLES</th>
+                            <th>JUEVES</th>
+                            <th>VIERNES</th>
+                        </tr>
+                    </thead>
+                    <tbody class="fw-bold text-center">
+                        <tr>
+                            <td>7:00 a 8:00 a.m.</td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                        </tr>
+                        <!-- Repite las filas para cada horario -->
+                        <tr>
+                            <td>8:00 a 9:00 a.m.</td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                        </tr>
+                        <!-- ... -->
+                        <tr>
+                            <td>9:00 a 10:00 a.m.</td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                        </tr>
+                        <!-- ... -->
+                        <tr>
+                            <td>10:00 a 11:00 a.m.</td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                        </tr>
+                        <!-- ... -->
+                        <tr>
+                            <td>11:00 a 12:00 p.m.</td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                        </tr>
+                        <!-- ... -->
+                        <tr>
+                            <td>12:00 a 01:00 p.m.</td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                        </tr>
+                        <!-- ... -->
+                        <tr>
+                            <td>01:00 a 02:00 p.m.</td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                        </tr>
+                        <!-- ... -->
+                        <tr>
+                            <td>03:00 a 04:00 p.m.</td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                        </tr>
+                        <!-- ... -->
+                        <tr>
+                            <td>04:00 a 05:00 p.m.</td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                        </tr>
+                        <!-- ... -->
+                        <tr>
+                            <td>06:00 a 07:00 p.m.</td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                        </tr>
+                        <!-- ... -->
+                        <tr>
+                            <td>08:00 a 09:00 p.m.</td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                            <td class="text-secondary"> PLACEHOLDER </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <script src="../js/bootstrap.bundle.min.js" ></script>
+</body>
+</html>
