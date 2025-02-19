@@ -45,11 +45,36 @@
 }
 .btn-primary{
     border: none;
-
 }
 .boton-login{
     transition: transform 0.2s ease;
 }
 .boton-login:hover{
     transform: scale(1.2);
+}
+
+.registro-alumno{
+    border-radius: 4rem;
+}
+.Registro-Alumno{
+    text-transform: uppercase;
+    color: var(--morado);
+    font-size: 2rem;
+}
+.logo{
+    width: 10rem;
+    margin: auto;
+}
+.btn-secondary{
+    background-color: var(--blanco);
+    color: black;
+    font-weight: bold;
+}
+.boton-inicio{
+    transition: transform 0.2s ease;
+}
+.boton-inicio:hover{
+    transform: scale(1.2);
+    background-color: black;
+    color: var(--blanco);
 }
