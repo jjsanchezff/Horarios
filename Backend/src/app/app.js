@@ -7,10 +7,22 @@ import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser'
 
 import cookieParser from 'cookie-parser'
+import { createClient } from '@supabase/supabase-js';
+
+import rolRouter from '../router/rol.router.js';
+import usuarioRouter from '../router/usuario.router.js';
+
+
 
 //initialization
 const app = express();
 dotenv.config();
+
+// prueba de la bd
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
+
 
 // settings
 const __filename = fileURLToPath(import.meta.url);
@@ -30,13 +42,16 @@ app.use(bodyParser.json())
 app.use(cookieParser());
 
 
-// Rutas
+// Ruta principal
 app.get('/', (req, res) => {
     // const user = req.session
     // res.render('login', { user })
-    res.status(200).send("Cargo correctametne")
+    res.status(200).send("Cargó correctamente")
 })
 
+// Endpoints 
+app.use("/api", rolRouter)
+app.use("/api", usuarioRouter)
 
 // Mensaje por defecto si no existe
 app.use((req, res) => {
