@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser'
 
 import cookieParser from 'cookie-parser'
+import session from 'express-session' // Importa express-session
 import { createClient } from '@supabase/supabase-js';
 
 import rolRouter from '../router/rol.router.js';
@@ -41,6 +42,12 @@ app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cookieParser());
 
+// Configura las sesiones
+app.use(session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: true
+}));
 
 // Ruta principal
 app.get('/', (req, res) => {
