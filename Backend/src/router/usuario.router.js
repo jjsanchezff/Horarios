@@ -25,16 +25,16 @@ usuarioRouter.get("/usuario/login", (req, res) => {
     }
 });
 
-usuarioRouter.get("/docente/registro",(req, res)=>{
+usuarioRouter.get("/docente/registro", (req, res) => {
     res.render('partials/registrarProfesor');
 })
-usuarioRouter.get("/secretaria/registro",(req, res)=>{
+usuarioRouter.get("/secretaria/registro", (req, res) => {
     res.render('partials/registrarSecretaria');
 })
-usuarioRouter.get("/administrador/registro",(req,res) =>{
+usuarioRouter.get("/administrador/registro", (req, res) => {
     res.render("partials/registrarAdministrador");
 })
-usuarioRouter.get("/usuario/registro/seleccionar",(req,res)=>{
+usuarioRouter.get("/usuario/registro/seleccionar", (req, res) => {
     res.render('partials/ventana');
 })
 
