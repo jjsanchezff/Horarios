@@ -123,5 +123,28 @@ export class UsuarioController {
             res.status(500).json({ success: false, message: 'Ocurrió un error inesperado.' });
         }
     }
+    static async crearSecretaria(req, res) {
+        try {
+            const datos = req.body
+            console.log("Se recibió los siguientes datos:")
+            console.log(datos)
+            const { data, error } = await supabase.from('usuario').insert({
+                nombres: datos.nombres,
+                apellidos: datos.apellidos,
+                codigo: datos.codigo,   
+                correo: datos.correo,
+                clave: datos.clave,
+                id_rol: datos.id_rol,
+            }).select();
+
+            if (error) throw error;
+            console.log('Secretaria registrado correctamente.')
+
+            res.send('Secretaria registrado correctamente.');
+        } catch (error) {
+            res.status(500).json({ success: false, message: error.message });
+        }
+    }
+
 
 }
