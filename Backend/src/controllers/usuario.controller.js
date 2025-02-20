@@ -107,8 +107,16 @@ export class UsuarioController {
             const { data, error } = await supabase.from('usuario').select().eq('codigo', datos.codigo).eq('clave', datos.clave);
 
 
-            if (data[0].id_rol === 1)
+            if (data[0].id_rol === 1) {
+
+                req.session.user = data[0];
+                console.log("data0: ")
+                console.log(data[0])
+
                 res.redirect('/api/usuario/director');
+                return;
+            }
+
 
 
             const { data: data2, error: error2 } = await supabase.from('docente').select().eq('id_usuario', data[0].id_usuario);

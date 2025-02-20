@@ -79,11 +79,11 @@
         <div class="container-xl">
             <div class="row header">
                 <div class="col-auto">
-                    <img src="https://placehold.co/60x60" alt="User Placeholder" class="rounded-circle">
+                    <img src="<%=url_imagen%>" alt="User Placeholder" class="rounded-circle">
                 </div>
                 <div class="col">
-                    <h2 class="fw-bold">Nombres Completos</h2>
-                    <p class="fw-bold">Correo Electrónico</p>
+                    <h2 class="fw-bold"><%= nombres2 %></h2>
+                    <p class="fw-bold"><%= correo %></p>
                 </div>
             </div>
         </div>
@@ -107,18 +107,18 @@
                 </thead>
                 <tbody>
                     <% if (typeof docentes !== 'undefined' && Array.isArray(docentes) && docentes.length > 0) { %>
-                        <% for(let i = 0; i < docentes.length; i++) { %>
+                        <% for(let a = 0; a < docentes.length; a++) { %>
                             <tr class="text-center">
                                 <td class="text-center">
-                                    <img src="https://placehold.co/50x50" alt="User Placeholder" class="rounded-circle">
+                                    <img src="<%= docentes[a].usuario.url_imagen %>" alt="User Placeholder" class="rounded-circle w-25" >
                                 </td>
-                                <td><%= docentes[i].usuario.nombres %></td>
-                                <td><%= docentes[i].usuario.apellidos %></td>
-                                <td><%= docentes[i].usuario.codigo %></td>
-                                <td><%= docentes[i].usuario.correo %></td>
-                                <td><%= docentes[i].grado %></td>
+                                <td><%= docentes[a].usuario.nombres %></td>
+                                <td><%= docentes[a].usuario.apellidos %></td>
+                                <td><%= docentes[a].usuario.codigo %></td>
+                                <td><%= docentes[a].usuario.correo %></td>
+                                <td><%= docentes[a].grado %></td>
                                 <td class="text-center">
-                                    <a href="/api/docente/<%= docentes[i].id_docente %>" class="btn btn-primary btn-sm">Ver Horario</a>
+                                    <a href="/api/docente/<%= docentes[a].id_docente %>" class="btn btn-primary btn-sm">Ver Horario</a>
                                 </td>                           
                             </tr>
                         <% } %>

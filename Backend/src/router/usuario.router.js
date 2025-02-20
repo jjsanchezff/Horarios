@@ -92,6 +92,7 @@ usuarioRouter.get("/cursos", async (req, res) => {
 
 usuarioRouter.get("/usuario/director", async (req, res) => {
     try {
+        const user = req.session.user;
         const { data: docentes, error } = await supabase
             .from("docente")
             .select("*, usuario(*)")
@@ -101,8 +102,21 @@ usuarioRouter.get("/usuario/director", async (req, res) => {
             throw error;
         }
 
-        console.log(docentes);
-        res.render("partials/pantallaDirector", { docentes });
+        console.log("data:......")
+        console.log(docentes)
+
+        console.log(user)
+
+
+
+        // console.log(user)
+
+
+        // console.log(docentes);
+        console.log(user.url_imagen)
+        console.log("------------------------------------------")
+        console.log(docentes[0].usuario.nombres)
+        res.render("partials/pantallaDirector", { docentes, nombres2: user.nombres, correo: user.correo, url_imagen: user.url_imagen });
 
     } catch (err) {
         console.error("Error al obtener los docentes:", err.message);
