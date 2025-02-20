@@ -49,4 +49,25 @@ usuarioRouter.get("/dashboard", (req, res) => {
     }
 });
 
+usuarioRouter.get("/vistaDocente", (req, res) => {
+    const user = req.session.user;
+    if (req.session && req.session.user) {
+        res.render('partials/pantallaDocente', {
+            nombres: user.nombres,
+            apellidos: user.apellidos,
+            codigo: user.codigo,
+            correo: user.correo
+        });
+    } else {
+        res.redirect('/api/usuario/login');
+    }
+
+});
+
+
+// usuarioRouter.get("/usuario/vista", (req, res) => {
+//     console.log("")
+//     res.render('partials/pantallaDocente');
+// })
+
 export default usuarioRouter

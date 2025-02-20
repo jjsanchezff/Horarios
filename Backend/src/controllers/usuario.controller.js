@@ -116,7 +116,16 @@ export class UsuarioController {
 
             // Guardar información del usuario en la sesión
             req.session.user = data[0];
-            res.redirect('/api/dashboard'); // Redirigir al dashboard o a donde sea necesario
+            console.log('Usuario autenticado correctamente.');
+
+            if (data[0].id_rol === 1) {
+                res.redirect('/api/vistaDocente');
+            }
+            else if (data[0].id_rol === 4) {
+                res.redirect('/api/vistaDocente');
+            }
+
+
         } catch (error) {
             console.error('Error en el controlador de login:', error);
             res.status(500).json({ success: false, message: 'Ocurrió un error inesperado.' });
@@ -130,7 +139,7 @@ export class UsuarioController {
             const { data, error } = await supabase.from('usuario').insert({
                 nombres: datos.nombres,
                 apellidos: datos.apellidos,
-                codigo: datos.codigo,   
+                codigo: datos.codigo,
                 correo: datos.correo,
                 clave: datos.clave,
                 id_rol: datos.id_rol,
