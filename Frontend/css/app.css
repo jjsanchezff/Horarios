@@ -84,3 +84,6 @@
 .text-secondary{
     color: var(--morado)!important;
 }
+.titulo-404{
+    font-size: 3rem;
+}
