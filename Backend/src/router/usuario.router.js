@@ -79,9 +79,44 @@ usuarioRouter.get("/cursos", async (req, res) => {
     console.log('Cursos:', data2);
 })
 
-// usuarioRouter.get("/usuario/vista", (req, res) => {
-//     console.log("")
-//     res.render('partials/pantallaDocente');
-// })
+usuarioRouter.get("/usuario/director",async (req,res)=>{
+    try{
+        const {data, error} = await supabase.from("docente").select("*, usuario(*)");;
+        if(error) {
+            throw error;
+        }
+        const profesores = data  || []
+        console.log(profesores)
+        res.render("partials/pantallaDirector", {docentes : profesores})
+
+    } catch (err) {
+        console.error("Error al obtener los docentes:", err.message);
+        res.status(500).send("Error interno del servidor");
+    }
+    
+})
+usuarioRouter.get("/docente/:id", async (req,res) =>{
+    try {
+        const id = req.params.id; 
+
+        const { data, error } = await supabase
+            .from('docente').select("*, usuario(*)").eq('id_docente', id)
+        if(error) {
+            throw error;
+        }
+
+        if (!data || data.length === 0) {
+            return res.status(404).send("Docente no encontrado");
+        }
+
+        const docente = data[0]
+        
+        res.render('partials/profesorHorarioFinal',{docente : docente})
+    }
+    catch (err) {
+        console.error("Error al obtener los docentes:", err.message);
+        res.status(500).send("Error interno del servidor");
+    }
+})
 
 export default usuarioRouter
