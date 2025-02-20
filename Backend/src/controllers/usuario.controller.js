@@ -104,6 +104,12 @@ export class UsuarioController {
             }
 
             const { data, error } = await supabase.from('usuario').select().eq('codigo', datos.codigo).eq('clave', datos.clave);
+            const { data: data2, error: error2 } = await supabase.from('docente').select().eq('id_usuario', data[0].id_usuario);
+            const { data: dataCursos, error: errorCursos } = await supabase.from('curso').select('nombre');
+            if (errorCursos) {
+                console.error('Error al intentar obtener los cursos:', errorCursos);
+                throw errorCursos;
+            }
 
             if (error) {
                 console.error('Error al intentar iniciar sesión:', error);
@@ -114,24 +120,16 @@ export class UsuarioController {
                 return res.status(401).send('Usuario no encontrado.');
             }
 
-
-            // se traera los nombres de todos los cursos
-            const { data: dataCursos, error: errorCursos } = await supabase.from('curso').select('nombre');
-            if (errorCursos) {
-                console.error('Error al intentar obtener los cursos:', errorCursos);
-                throw errorCursos;
-            }
-
-            // console.log('Cursos:', dataCursos);
-
-
-
-            // Guardar información del usuario en la sesión
-            req.session.user = data[0];
             req.session.cursos = dataCursos;
+            
+            // Guardar información del usuario en la sesión
+            data[0].id_docente = data2[0].id_docente;
+            req.session.user = data[0];
+
+            console.log(req.session.user);
             console.log('Usuario autenticado correctamente.');
 
-            if (data[0].id_rol === 1) {
+            if (data[0].id_rol === 2) {
                 res.redirect('/api/vistaDocente');
             }
             else if (data[0].id_rol === 4) {
@@ -144,6 +142,7 @@ export class UsuarioController {
             res.status(500).json({ success: false, message: 'Ocurrió un error inesperado.' });
         }
     }
+
     static async crearSecretaria(req, res) {
         try {
             const datos = req.body
@@ -164,6 +163,43 @@ export class UsuarioController {
             res.send('Secretaria registrado correctamente.');
         } catch (error) {
             res.status(500).json({ success: false, message: error.message });
+        }
+    }
+
+    static async crearPreferenciaHorario(req, res) {
+        try {
+            const datos = req.body;
+            console.log("Se recibió los siguientes datos del form:");
+            console.log(datos);
+    
+            if (!datos.aula || !datos.tipoSesion || !datos.id_curso) {
+                return res.status(400).json({ success: false, message: 'Datos incompletos.' });
+            }
+
+            const horaInicio = new Date(`1970-01-01 ${datos.hora_inicio}`).toTimeString().split(' ')[0];
+            const horaFin = new Date(`1970-01-01 ${datos.hora_fin}`).toTimeString().split(' ')[0];
+            
+            console.log('Hora de inicio:', horaInicio);
+            console.log('Hora de fin:', horaFin);
+    
+            const { data, error } = await supabase.from('preferencia_horario').insert({
+                dia: datos.dia,
+                hora_inicio: horaInicio,
+                hora_fin: horaFin,
+                horas: 1,
+                aula: datos.aula,
+                id_docente: datos.id_docente,
+                id_periodo: datos.id_periodo,
+                id_curso: datos.id_curso,
+                sesion: datos.tipoSesion,
+            });
+    
+            if (error) throw error;
+    
+            res.json({ success: true, message: 'Preferencia de horario guardada correctamente.' });
+        } catch (error) {
+            console.error('Error en el controlador de preferencia de horario:', error);
+            res.status(500).json({ success: false, message: 'Ocurrió un error inesperado.' });
         }
     }
 }

@@ -11,11 +11,10 @@
     <header class="bg-secondary p-3">
         <div class="d-flex align-items-center">
             <div class="unt">
-                <img class="img-fluid" src="/img/insigniaUnt.png" alt="insigniaUnt">
+                <img class="img-fluid" src="../img/insigniaUnt.png" alt="insigniaUnt">
             </div>
             <div class="container-xl">
                 <h1 class="fw-bold text-white titulo fs-1">Universidad Nacional de Trujillo</h1>
-
             </div>
         </div>
     </header>
@@ -32,7 +31,6 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="nombres" class="form-label">Nombres:</label>
-
                                     <input type="text" class="form-control" id="nombres" value="<%= nombres%>" readonly>
                                 </div>
                                 <div class="col-md-6">
@@ -56,6 +54,7 @@
             </div>
         </div>
 
+        <!-- Sección del Horario -->
         <div class="card border-light">
             <div class="card-header text-center border-light bg-transparent">
                 <h4 class="fw-bold">Asignación de Horario</h4>
@@ -73,104 +72,133 @@
                         </tr>
                     </thead>
                     <tbody class="fw-bold text-center">
-                        <% let horarios = ["7:00 a 8:00 a.m.", 
-                        "8:00 a 9:00 a.m.", 
-                        "9:00 a 10:00 a.m.",
-                        "10:00 a 11:00 a.m.",
-                        "11:00 a 12:00 a.m.",
-                        "12:00 a 1:00 p.m.",
-                        "1:00 a 2:00 p.m.",
-                        "2:00 a 3:00 p.m.",
-                        "3:00 a 4:00 p.m.",
-                        "4:00 a 5:00 p.m.",
-                        "5:00 a 6:00 p.m.",
-                        "6:00 a 7:00 p.m.",
-                        "7:00 a 8:00 p.m.",
-                        "8:00 a 9:00 p.m."]; %> 
-                        <% let dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]; %>
-                
-                        <% horarios.forEach((horario, i) => { %>
+                        <% for (let i = 7; i <= 19; i++) { %>
                             <tr>
-                                <td><%= horario %></td>
-                                <% dias.forEach((dia, j) => { 
-                                    let btnId = `btn-${i}-${j}`; // ID único del botón
-                                %>
-                                    <td>
-                                        <button type="button" class="btn btn-primary seleccionar-btn"
-                                            id="<%= btnId %>"
-                                            data-horario="<%= horario %>" 
-                                            data-dia="<%= dia %>"
-                                            data-bs-toggle="modal" data-bs-target="#informacionModal">
-                                            Seleccionar
-                                        </button>
-                                    </td>
-                                <% }) %>
+                                <td>De <%= i %>:00 a <%= i + 1 %>:00</td>
+                                <td><button class="btn btn-primary" onclick="openHorarioModal('Lunes', '<%= i %>:00', '<%= i+1 %>:00')">Seleccionar</button></td>
+                                <td><button class="btn btn-primary" onclick="openHorarioModal('Martes', '<%= i %>:00', '<%= i+1 %>:00')">Seleccionar</button></td>
+                                <td><button class="btn btn-primary" onclick="openHorarioModal('Miercoles', '<%= i %>:00', '<%= i+1 %>:00')">Seleccionar</button></td>
+                                <td><button class="btn btn-primary" onclick="openHorarioModal('Jueves', '<%= i %>:00', '<%= i+1 %>:00')">Seleccionar</button></td>
+                                <td><button class="btn btn-primary" onclick="openHorarioModal('Viernes', '<%= i %>:00', '<%= i+1 %>:00')">Seleccionar</button></td>
                             </tr>
-                        <% }) %>
+                        <% } %>
                     </tbody>
                 </table>
             </div>
         </div>
-    </div>
 
-
-        <!-- Modal -->
-        <div class="modal fade" id="informacionModal" tabindex="-1" aria-labelledby="informacionModalLabel" aria-hidden="true">
+        <!-- Modal para ingresar datos del horario -->
+        <div class="modal fade" id="horarioModal" tabindex="-1" aria-labelledby="horarioModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content bg-secondary text-white">
                     <div class="modal-header border-0">
-                        <h5 class="modal-title fw-bold" id="informacionModalLabel">Información</h5>
+                        <h5 class="modal-title fw-bold" id="horarioModalLabel">Información</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-4">
-                        <form>
-                            <div class="mb-4">
-                                <label for="aula" class="form-label">Aula</label>
-                                <select class="form-select" id="aula">
-                                    <option value="info2">Info-2</option>
-                                    <option value="info3">Info-3</option>
-                                    <option value="info5">Info-5</option>
-                                    <option value="laba">Lab-A</option>
-                                    <option value="labb">Lab-B</option>
-                                    <option value="labc">Lab-C</option>
-                                    <option value="pool14">Pool-14</option>
-                                    <option value="pool15">Pool-15</option>
+                        <form id="horarioForm">
+                            <div class="mb-3">
+                                <label for="aula" class="form-label">Aula:</label>
+                                <select class="form-select" id="aula" name="aula">
+                                    <option value="info2">Info - 2</option>
+                                    <option value="info3">Info - 3</option>
+                                    <option value="info5">Info - 5</option>
+                                    <option value="laba">Lab - A</option>
+                                    <option value="labb">Lab - B</option>
+                                    <option value="labc">Lab - C</option>
+                                    <option value="pool14">Pool - 14</option>
+                                    <option value="pool15">Pool - 15</option>
                                     <!-- Opciones de aula -->
                                 </select>
+
                             </div>
-                            <div class="mb-4">
-                                <label for="tipoSesion" class="form-label">Tipo de Sesión</label>
-                                <select class="form-select" id="tipoSesion">
+                            <div class="mb-3">
+                                <label for="tipoSesion" class="form-label">Tipo de Sesión:</label>
+                                <select class="form-select" id="tipoSesion" name="tipoSesion">
                                     <option value="teoria">Teoría</option>
                                     <option value="practica">Práctica</option>
                                     <option value="laboratorio">Laboratorio</option>
                                     <!-- Opciones de tipo de sesión -->
                                 </select>
+
                             </div>
-                            <div class="mb-4">
-                                <label for="curso" class="form-label">Curso</label>
-                                <select class="form-select" id="curso" name="curso">
+                            <div class="mb-3">
+                                <label for="curso" class="form-label">Curso:</label>
+                                <select class="form-select" id="id_curso" name="id_curso">
                                     <% cursos.forEach((curso, index) => { %>
-                                        <option value="<%= index + 1 %>"><%= curso.nombre %></option>
+                                        <option value="<%= index + 2 %>"><%= curso.nombre %></option>
                                     <% }); %>
                                 </select>
                             </div>
-                            
-                            
+                            <input type="hidden" id="dia" name="dia">
+                            <input type="hidden" id="hora_inicio" name="hora_inicio">
+                            <input type="hidden" id="hora_fin" name="hora_fin">
+                            <input type="hidden" id="id_docente" name="id_docente" value="<%= id_docente %>">
+                            <input type="hidden" id="id_periodo" name="id_periodo" value="1"> <!-- Asumiendo un periodo por defecto -->
                         </form>
                     </div>
                     <div class="modal-footer justify-content-center border-0">
-                        <button type="button" class="btn btn-light rounded-pill px-5" data-bs-dismiss="modal">Guardar</button>
+                        <button type="button" class="btn btn-secondary rounded-pill px-5" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-light rounded-pill px-5" onclick="guardarHorario()">Guardar</button>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
+    <script>
+        function openHorarioModal(dia, hora_i, hora_f) {
+            document.getElementById('dia').value = dia;
+            document.getElementById('hora_inicio').value = hora_i + ':00';
+            document.getElementById('hora_fin').value = hora_f + ':00';
+            $('#horarioModal').modal('show');
+        }
+
+        function guardarHorario() {
+            console.log("Botón 'Guardar' fue presionado");
+
+            const form = document.getElementById('horarioForm');
+            const formData = new FormData(form);
+            const dataObject = Object.fromEntries(formData);
+
+            // Asegúrate de que los datos estén en el formato correcto
+            const datos = {
+                dia: dataObject.dia,
+                hora_inicio: dataObject.hora_inicio,
+                hora_fin: dataObject.hora_fin,
+                horas: 1, // O el valor que desees
+                aula: dataObject.aula,
+                id_docente: dataObject.id_docente,
+                id_periodo: dataObject.id_periodo,
+                id_curso: dataObject.id_curso,
+                tipoSesion: dataObject.tipoSesion
+            };
+
+            fetch('/api/preferencia_horario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datos)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Horario guardado correctamente.');
+                    $('#horarioModal').modal('hide');
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Ocurrió un error inesperado.');
+            });
+        }
+    </script>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
-    <script src="../js/bootstrap.bundle.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

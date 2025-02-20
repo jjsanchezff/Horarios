@@ -53,17 +53,16 @@ usuarioRouter.get("/dashboard", (req, res) => {
 });
 
 usuarioRouter.get("/vistaDocente", (req, res) => {
-    const cursos = req.session.cursos;
-
-    console.log(cursos);
-
     const user = req.session.user;
+    const cursos = req.session.cursos;
     if (req.session && req.session.user) {
         res.render('partials/pantallaDocente', {
             nombres: user.nombres,
             apellidos: user.apellidos,
             codigo: user.codigo,
             correo: user.correo,
+            id_usuario: user.id_usuario,
+            id_docente: user.id_docente,
             cursos: cursos
         });
     } else {
@@ -118,5 +117,8 @@ usuarioRouter.get("/docente/:id", async (req,res) =>{
         res.status(500).send("Error interno del servidor");
     }
 })
+
+// Nueva ruta para guardar las preferencias de horario
+usuarioRouter.post("/preferencia_horario", UsuarioController.crearPreferenciaHorario);
 
 export default usuarioRouter
