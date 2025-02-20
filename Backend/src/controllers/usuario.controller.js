@@ -5,29 +5,32 @@ export class UsuarioController {
         try {
             const { data, error } = await supabase.from('usuario').select();
             if (error) throw error;
-            res.json({ success: true, data });
+            res.render('partials/registrarAlumno')
         } catch (error) {
             res.status(500).json({ success: false, message: error.message });
         }
     }
 
+    static async registroUsuario(req, res){
+        res.render('partials/registrarAlumno')
+    }
+
 
     static async crearUsuario(req, res) {
-        const datos = req.body
-        console.log("Se recibió los siguientes datos:")
-        console.log(datos)
-
         try {
-            const { data, error } = await supabase.from('usuario').insert({
-                nombres: datos.nombres,
-                apellidos: datos.apellidos,
-                codigo: datos.codigo,
-                correo: datos.correo,
-                clave: datos.clave,
-                id_rol: datos.id_rol
-            });
+            const datos = req.body
+            console.log("Se recibió los siguientes datos:")
+            console.log(datos)
+             const { data, error } = await supabase.from('usuario').insert({
+                 nombres: datos.nombres,
+                 apellidos: datos.apellidos,
+                 codigo: datos.codigo,
+                 correo: datos.correo,
+                 clave: datos.clave,
+                 id_rol: datos.id_rol
+             });
             if (error) throw error;
-            res.json({ success: true, data });
+            res.send('Usuario registrado correctamente.');
         } catch (error) {
             res.status(500).json({ success: false, message: error.message });
         }
