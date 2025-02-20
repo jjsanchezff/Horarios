@@ -31,9 +31,9 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
 
 // Static files
-// app.use(express.static(path.join(__dirname, '../public')))
+app.use(express.static(path.join(__dirname, '../public')))
 // app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
-//app.use(express.static('public'));
+// app.use(express.static('public'));
 
 // Middlewares
 app.use(morgan("dev"))
