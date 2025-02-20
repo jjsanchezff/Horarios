@@ -34,6 +34,10 @@ usuarioRouter.get("/secretaria/registro",(req, res)=>{
 usuarioRouter.get("/administrador/registro",(req,res) =>{
     res.render("partials/registrarAdministrador");
 })
+usuarioRouter.get("/usuario/registro/seleccionar",(req,res)=>{
+    res.render('partials/ventana');
+})
+
 usuarioRouter.post("/usuario/login", UsuarioController.logearUsuario);
 
 // Añade una ruta para el dashboard

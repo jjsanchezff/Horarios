@@ -62,7 +62,7 @@ app.use("/api", usuarioRouter)
 
 // Mensaje por defecto si no existe
 app.use((req, res) => {
-    res.status(404).send('¡El recurso no existe!')
+    res.render('partials/404')
 })
 
 
