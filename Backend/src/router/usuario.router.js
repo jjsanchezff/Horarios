@@ -55,6 +55,16 @@ usuarioRouter.get("/dashboard", (req, res) => {
 usuarioRouter.get("/vistaDocente", (req, res) => {
     const user = req.session.user;
     const cursos = req.session.cursos;
+    const horario = req.session.horario;
+    console.log("url_imagen: ")
+    console.log(user.url_imagen)
+
+    if (user.url_imagen === null) {
+        user.url_imagen = "https://i.imgur.com/x10VqU4.jpeg"
+    }
+    console.log("url_imagen: ")
+    console.log(user.url_imagen)
+
     if (req.session && req.session.user) {
         res.render('partials/pantallaDocente', {
             nombres: user.nombres,
@@ -63,7 +73,9 @@ usuarioRouter.get("/vistaDocente", (req, res) => {
             correo: user.correo,
             id_usuario: user.id_usuario,
             id_docente: user.id_docente,
-            cursos: cursos
+            url_imagen: user.url_imagen,
+            cursos: cursos,
+            horario: horario
         });
     } else {
         res.redirect('/api/usuario/login');
@@ -78,29 +90,29 @@ usuarioRouter.get("/cursos", async (req, res) => {
     console.log('Cursos:', data2);
 })
 
-usuarioRouter.get("/usuario/director",async (req,res)=>{
-    try{
-        const {data, error} = await supabase.from("docente").select("*, usuario(*)");;
-        if(error) {
+usuarioRouter.get("/usuario/director", async (req, res) => {
+    try {
+        const { data, error } = await supabase.from("docente").select("*, usuario(*)");;
+        if (error) {
             throw error;
         }
-        const profesores = data  || []
+        const profesores = data || []
         console.log(profesores)
-        res.render("partials/pantallaDirector", {docentes : profesores})
+        res.render("partials/pantallaDirector", { docentes: profesores })
 
     } catch (err) {
         console.error("Error al obtener los docentes:", err.message);
         res.status(500).send("Error interno del servidor");
     }
-    
+
 })
-usuarioRouter.get("/docente/:id", async (req,res) =>{
+usuarioRouter.get("/docente/:id", async (req, res) => {
     try {
-        const id = req.params.id; 
+        const id = req.params.id;
 
         const { data, error } = await supabase
             .from('docente').select("*, usuario(*)").eq('id_docente', id)
-        if(error) {
+        if (error) {
             throw error;
         }
 
@@ -109,8 +121,8 @@ usuarioRouter.get("/docente/:id", async (req,res) =>{
         }
 
         const docente = data[0]
-        
-        res.render('partials/profesorHorarioFinal',{docente : docente})
+
+        res.render('partials/profesorHorarioFinal', { docente: docente })
     }
     catch (err) {
         console.error("Error al obtener los docentes:", err.message);

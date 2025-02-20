@@ -95,6 +95,7 @@ export class UsuarioController {
 
     static async logearUsuario(req, res) {
         try {
+
             const datos = req.body;
             console.log("Se recibió los siguientes datos:");
             console.log(datos);
@@ -104,8 +105,19 @@ export class UsuarioController {
             }
 
             const { data, error } = await supabase.from('usuario').select().eq('codigo', datos.codigo).eq('clave', datos.clave);
+
+
+            if (data[0].id_rol === 1)
+                res.redirect('/api/usuario/director');
+
+
             const { data: data2, error: error2 } = await supabase.from('docente').select().eq('id_usuario', data[0].id_usuario);
             const { data: dataCursos, error: errorCursos } = await supabase.from('curso').select('nombre');
+
+            const { data: dataHorario, error: errorHorario } = await supabase.from('preferencia_horario').select().eq('id_docente', data2[0].id_docente);
+
+            console.log('Horario:', dataHorario);
+
             if (errorCursos) {
                 console.error('Error al intentar obtener los cursos:', errorCursos);
                 throw errorCursos;
@@ -121,17 +133,20 @@ export class UsuarioController {
             }
 
             req.session.cursos = dataCursos;
-            
+
             // Guardar información del usuario en la sesión
             data[0].id_docente = data2[0].id_docente;
             req.session.user = data[0];
+            req.session.horario = dataHorario;
 
             console.log(req.session.user);
             console.log('Usuario autenticado correctamente.');
 
+
             if (data[0].id_rol === 2) {
                 res.redirect('/api/vistaDocente');
             }
+
             else if (data[0].id_rol === 4) {
                 res.redirect('/api/vistaDocente');
             }
@@ -171,17 +186,17 @@ export class UsuarioController {
             const datos = req.body;
             console.log("Se recibió los siguientes datos del form:");
             console.log(datos);
-    
+
             if (!datos.aula || !datos.tipoSesion || !datos.id_curso) {
                 return res.status(400).json({ success: false, message: 'Datos incompletos.' });
             }
 
             const horaInicio = new Date(`1970-01-01 ${datos.hora_inicio}`).toTimeString().split(' ')[0];
             const horaFin = new Date(`1970-01-01 ${datos.hora_fin}`).toTimeString().split(' ')[0];
-            
+
             console.log('Hora de inicio:', horaInicio);
             console.log('Hora de fin:', horaFin);
-    
+
             const { data, error } = await supabase.from('preferencia_horario').insert({
                 dia: datos.dia,
                 hora_inicio: horaInicio,
@@ -193,9 +208,9 @@ export class UsuarioController {
                 id_curso: datos.id_curso,
                 sesion: datos.tipoSesion,
             });
-    
+
             if (error) throw error;
-    
+
             res.json({ success: true, message: 'Preferencia de horario guardada correctamente.' });
         } catch (error) {
             console.error('Error en el controlador de preferencia de horario:', error);
