@@ -5,6 +5,9 @@ import { isAuthenticated } from "../middleware/auth.middleware.js";
 
 const usuarioRouter = Router()
 
+
+import { supabase } from "../config/conexiondb.js";
+
 // Registrar Usuario
 usuarioRouter.get("/usuario/registro", UsuarioController.registroUsuario)
 
@@ -50,13 +53,18 @@ usuarioRouter.get("/dashboard", (req, res) => {
 });
 
 usuarioRouter.get("/vistaDocente", (req, res) => {
+    const cursos = req.session.cursos;
+
+    console.log(cursos);
+
     const user = req.session.user;
     if (req.session && req.session.user) {
         res.render('partials/pantallaDocente', {
             nombres: user.nombres,
             apellidos: user.apellidos,
             codigo: user.codigo,
-            correo: user.correo
+            correo: user.correo,
+            cursos: cursos
         });
     } else {
         res.redirect('/api/usuario/login');
@@ -64,6 +72,12 @@ usuarioRouter.get("/vistaDocente", (req, res) => {
 
 });
 
+
+usuarioRouter.get("/cursos", async (req, res) => {
+    console.log("fljska")
+    const { data: data2, error: error2 } = await supabase.from('curso').select();
+    console.log('Cursos:', data2);
+})
 
 // usuarioRouter.get("/usuario/vista", (req, res) => {
 //     console.log("")

@@ -114,8 +114,21 @@ export class UsuarioController {
                 return res.status(401).send('Usuario no encontrado.');
             }
 
+
+            // se traera los nombres de todos los cursos
+            const { data: dataCursos, error: errorCursos } = await supabase.from('curso').select('nombre');
+            if (errorCursos) {
+                console.error('Error al intentar obtener los cursos:', errorCursos);
+                throw errorCursos;
+            }
+
+            // console.log('Cursos:', dataCursos);
+
+
+
             // Guardar información del usuario en la sesión
             req.session.user = data[0];
+            req.session.cursos = dataCursos;
             console.log('Usuario autenticado correctamente.');
 
             if (data[0].id_rol === 1) {
