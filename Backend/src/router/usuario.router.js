@@ -92,24 +92,27 @@ usuarioRouter.get("/cursos", async (req, res) => {
 
 usuarioRouter.get("/usuario/director", async (req, res) => {
     try {
-        const { data, error } = await supabase.from("docente").select("*, usuario(*)");;
+        const { data: docentes, error } = await supabase
+            .from("docente")
+            .select("*, usuario(*)")
+            .order("id_docente", { ascending: true }); // Ordena directamente en la consulta
+
         if (error) {
             throw error;
         }
-        const profesores = data || []
-        console.log(profesores)
-        res.render("partials/pantallaDirector", { docentes: profesores })
+
+        console.log(docentes);
+        res.render("partials/pantallaDirector", { docentes });
 
     } catch (err) {
         console.error("Error al obtener los docentes:", err.message);
         res.status(500).send("Error interno del servidor");
     }
+});
 
-})
 usuarioRouter.get("/docente/:id", async (req, res) => {
     try {
         const id = req.params.id;
-
         const { data, error } = await supabase
             .from('docente').select("*, usuario(*)").eq('id_docente', id)
         if (error) {
@@ -120,9 +123,15 @@ usuarioRouter.get("/docente/:id", async (req, res) => {
             return res.status(404).send("Docente no encontrado");
         }
 
+        const { data: data2, error: error2 } = await supabase.from('preferencia_horario').select("*").eq('id_docente', id)
+        if (error) {
+            throw error;
+        }
+        const horariosProfesor = data2
+        // console.log(horariosProfesor)
         const docente = data[0]
 
-        res.render('partials/profesorHorarioFinal', { docente: docente })
+        res.render('partials/profesorHorarioFinal', { docente: docente, horariosProfesor: horariosProfesor })
     }
     catch (err) {
         console.error("Error al obtener los docentes:", err.message);
