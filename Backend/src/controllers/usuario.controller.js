@@ -104,8 +104,7 @@ export class UsuarioController {
             }
 
             const { data, error } = await supabase.from('usuario').select().eq('codigo', datos.codigo).eq('clave', datos.clave);
-            console.log(data);
-            
+
             if (error) {
                 console.error('Error al intentar iniciar sesión:', error);
                 throw error;
@@ -116,8 +115,8 @@ export class UsuarioController {
             }
 
             // Guardar información del usuario en la sesión
-            // req.session.user = data[0];
-            res.redirect('/dashboard'); // Redirigir al dashboard o a donde sea necesario
+            req.session.user = data[0];
+            res.redirect('/api/dashboard'); // Redirigir al dashboard o a donde sea necesario
         } catch (error) {
             console.error('Error en el controlador de login:', error);
             res.status(500).json({ success: false, message: 'Ocurrió un error inesperado.' });
