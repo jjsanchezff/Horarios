@@ -12,6 +12,11 @@ usuarioRouter.post("/usuario/crear", UsuarioController.crearUsuario)
 usuarioRouter.post("/docente/crear", UsuarioController.crearDocente)
 usuarioRouter.post("/estudiante/crear", UsuarioController.crearEstudiante)
 
-usuarioRouter.get("/usuario/login", UsuarioController.logearUsuario)
+// Login Usuario
+usuarioRouter.get("/usuario/login", (req, res) => {
+    res.render('partials/loginUsuario');
+});
+
+usuarioRouter.post("/usuario/login", UsuarioController.logearUsuario);
 
 export default usuarioRouter

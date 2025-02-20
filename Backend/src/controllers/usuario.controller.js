@@ -95,19 +95,32 @@ export class UsuarioController {
 
     static async logearUsuario(req, res) {
         try {
-            const datos = req.body
-            console.log("Se recibió los siguientes datos:")
-            console.log(datos)
-            const { data, error } = await supabase.from('usuario').select().eq('codigo', datos.codigo).eq('clave', datos.clave);
-            if (error) throw error;
-            console.log(data)
-            if (data.length > 0) {
-                res.send('Usuario logeado correctamente.');
-            } else {
-                res.send('Usuario no encontrado.');
+            const datos = req.body;
+            console.log("Se recibió los siguientes datos:");
+            console.log(datos);
+
+            if (!datos.codigo || !datos.clave) {
+                return res.status(400).send('Datos incompletos.');
             }
+
+            const { data, error } = await supabase.from('usuario').select().eq('codigo', datos.codigo).eq('clave', datos.clave);
+            console.log(data);
+            
+            if (error) {
+                console.error('Error al intentar iniciar sesión:', error);
+                throw error;
+            }
+
+            if (data.length === 0) {
+                return res.status(401).send('Usuario no encontrado.');
+            }
+
+            // Guardar información del usuario en la sesión
+            // req.session.user = data[0];
+            res.redirect('/dashboard'); // Redirigir al dashboard o a donde sea necesario
         } catch (error) {
-            res.status(500).json({ success: false, message: error.message });
+            console.error('Error en el controlador de login:', error);
+            res.status(500).json({ success: false, message: 'Ocurrió un error inesperado.' });
         }
     }
 
